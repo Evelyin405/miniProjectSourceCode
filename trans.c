@@ -181,6 +181,7 @@ void newRecord(FILE *fPtr)
     fseek(fPtr, (accountNum - 1) * sizeof(struct clientData), SEEK_SET);
     // read record from file
     fread(&client, sizeof(struct clientData), 1, fPtr);
+    fflush(fPtr);
     // display error if account already exists
     if (client.acctNum != 0)
     {
