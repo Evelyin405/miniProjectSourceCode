@@ -132,6 +132,10 @@ void updateRecord(FILE *fPtr)
         // request transaction amount from user
         printf("%s", "Enter charge ( + ) or payment ( - ): ");
         scanf("%lf", &transaction);
+        if (client.balance + transaction < 0) {
+    printf("Error: Insufficient funds! Transaction denied.\n");
+    return;
+}
         client.balance += transaction; // update record balance
 
         printf("%-6d%-16s%-11s%10.2f\n", client.acctNum, client.lastName, client.firstName, client.balance);
