@@ -224,6 +224,9 @@ unsigned int enterChoice(void)
                  "4 - delete an account\n"
                  "5 - end program\n? ");
 
-    scanf("%u", &menuChoice); // receive choice from user
-    return menuChoice;
+    if (scanf("%u", &menuChoice) != 1) {
+    while (getchar() != '\n');
+    return 0;
+}
+return menuChoice;
 } // end function enterChoice
