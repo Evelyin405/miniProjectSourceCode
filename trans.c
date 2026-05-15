@@ -18,6 +18,7 @@ void textFile(FILE *readPtr);
 void updateRecord(FILE *fPtr);
 void newRecord(FILE *fPtr);
 void deleteRecord(FILE *fPtr);
+void listAccounts(FILE *fPtr);
 
 int main(int argc, char *argv[])
 {
@@ -52,7 +53,9 @@ int main(int argc, char *argv[])
         case 4:
             deleteRecord(cfPtr);
             break;
-        // display if user does not select valid choice
+        case 6:
+            listAccounts(cfPtr);
+            break;
         default:
             puts("Incorrect choice");
             break;
@@ -222,7 +225,8 @@ unsigned int enterChoice(void)
                  "2 - update an account\n"
                  "3 - add a new account\n"
                  "4 - delete an account\n"
-                 "5 - end program\n? ");
+                 "5 - end program\n"
+                 "6 - list all accounts\n? ");
 
     if (scanf("%u", &menuChoice) != 1) {
     while (getchar() != '\n');
@@ -230,3 +234,22 @@ unsigned int enterChoice(void)
 }
 return menuChoice;
 } // end function enterChoice
+
+void listAccounts(FILE *fPtr)
+{
+    struct clientData client = {0, "", "", 0.0};
+    rewind(fPtr);
+    printf("\n%-6s%-16s%-11s%10s\n", "Acct", "Last Name", "First Name", "Balance");
+    printf("------------------------------------------------\n");
+    while (fread(&client, sizeof(struct clientData), 1, fPtr) == 1)
+    {
+        if (client.acctNum != 0)
+        {
+            printf("%-6d%-16s%-11s%10.2f\n",
+                   client.acctNum,
+                   client.lastName,
+                   client.firstName,
+                   client.balance);
+        }
+    }
+}
